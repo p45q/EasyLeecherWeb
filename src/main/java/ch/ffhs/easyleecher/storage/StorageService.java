@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import ch.ffhs.easyleecher.main.Logging;
 import ch.ffhs.easyleecher.storage.datamanager.DataManagerMarshal;
@@ -26,7 +27,7 @@ public class StorageService {
 	private static ArrayList<Season> seasons;
 	private static ArrayList<NZBProvider> providers;
 	private static GlobalSettings globalsettings;
-	private static final String EASYLEECHER_XML = "./easyleecher-data.xml";
+	private static final String EASYLEECHER_XML = "/apps/easyleecher-data.xml";
 	private static StorageService instance = new StorageService();
 
 	private StorageService() {
@@ -40,10 +41,15 @@ public class StorageService {
 	}
 
 	private void init() {
+		Logger log = Logger.getLogger(this.getClass().getName());
+
 		File f = new File(EASYLEECHER_XML);
 		if (f.exists()) {
+			log.info("FILE FOUND DUUUFFFTE");
+
 			loaddata();
 		} else {
+			log.info("NO FILE FUUUU");
 
 			// default values
 			globalsettings.setSearchInterval(4);
