@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package main.java.de.beyondjava.jsf.sample.carshop;
+package de.beyondjava.jsf.sample.carshop;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

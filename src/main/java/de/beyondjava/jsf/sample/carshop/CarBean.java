@@ -1,4 +1,4 @@
-package main.java.de.beyondjava.jsf.sample.carshop;
+package de.beyondjava.jsf.sample.carshop;
 
 import java.io.Serializable;
 import java.util.Map;

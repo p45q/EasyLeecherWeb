@@ -1,4 +1,4 @@
-package main.java.de.beyondjava.jsf.sample.carshop;
+package de.beyondjava.jsf.sample.carshop;
 
 import java.io.Serializable;
 import java.util.List;
@@ -7,6 +7,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+
+import ch.ffhs.easyleecher.storage.StorageService;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 
@@ -37,9 +39,10 @@ public class BasicView implements Serializable {
 	public void setDynamicOptions(DynamicOptionBean dynamicOptions) {
 		this.dynamicOptions = dynamicOptions;
 	}
-
+	private StorageService storageService;
 	@PostConstruct
 	public void init() {
+		storageService = StorageService.getInstance();
 		root = new DefaultTreeNode("Root", null);
 		TreeNode all = new DefaultTreeNode("Car pool", root);
 		List<String> brands = staticOptions.getBrands();
