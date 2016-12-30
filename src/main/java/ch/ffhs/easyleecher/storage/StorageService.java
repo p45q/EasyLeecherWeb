@@ -232,6 +232,14 @@ public class StorageService {
 		return null;
 	}
 
+	public Serie getSerieByName(String serieName) {
+		for (Serie serie : series) {
+			if (serie.getSerieName().equals(serieName)) {
+				return serie;
+			}
+		}
+		return null;
+	}
 	/**
 	 * @param season
 	 * @return serie

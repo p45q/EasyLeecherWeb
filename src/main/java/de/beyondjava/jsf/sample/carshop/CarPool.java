@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -28,6 +29,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import ch.ffhs.easyleecher.storage.StorageService;
+import ch.ffhs.easyleecher.storage.model.Episode;
+import ch.ffhs.easyleecher.storage.model.Season;
+import ch.ffhs.easyleecher.storage.model.Serie;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.TreeNode;
 
@@ -37,12 +42,13 @@ public class CarPool implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final static int SIZE_OF_INITIAL_CAR_POOL = 1000;
-
+	private StorageService storageService;
 	private TreeNode selectedNode;
-
 	private String filterBrand = null;
 	private String filterType = null;
-
+	private Season selectedSeason;;
+	private Serie selectedSerie;
+	private List<Episode> vcp;
 	@ManagedProperty("#{staticOptionBean}")
 	private StaticOptionBean staticOptions;
 
@@ -74,12 +80,32 @@ public class CarPool implements Serializable {
 	public List<Car> getCarPool() {
 		return carPool;
 	}
+	public String getSerieImage(){
+		if(selectedSerie==null)
+		{
+			return "lala";
+		}
+		return selectedSerie.getBanner();
+	}
+	public String getSerieDescription(){
+		if(selectedSerie==null)
+		{
+			return "lala";
+		}
+		Logger log =
+				Logger.getLogger(this.getClass().getName());
+		log.warning("Description: "+selectedSerie.getSerieDescription());
+		return selectedSerie.getSerieDescription();
+	}
+	public List<Episode> getVisibleCarPool() {
+		storageService = StorageService.getInstance();
+		Logger log =
+				Logger.getLogger(this.getClass().getName());
 
-	public List<Car> getVisibleCarPool() {
-		List<Car> vcp = new ArrayList<Car>();
-		for (Car c: carPool) {
-			if (c.isVisible())
-				vcp.add(c);
+
+		if(selectedSeason!=null) {
+			vcp = storageService.getSeasonEpisodes(selectedSeason);
+			log.warning("loading..." + selectedSeason.getSeasonName() + "with" + vcp.size());
 		}
 		return vcp;
 	}
@@ -99,6 +125,7 @@ public class CarPool implements Serializable {
 			carPool.add(getRandomCar());
 		}
 		selectedCars = carPool;
+
 	}
 
 	public void setCarPool(List<Car> carpool) {
@@ -149,7 +176,32 @@ public class CarPool implements Serializable {
 			setFilterBrand(treeNode.getData().toString());
 			setFilterType(null);
 		}
-		
+		Logger log =
+				Logger.getLogger(this.getClass().getName());
+		log.info(parent.getData().toString());
+		log.info(treeNode.getData().toString());
+		log.info(treeNode.getData().getClass().toString());
+		if(parent.getData().toString().equals("Serien"))
+		{
+			log.info("isch serie");
+		}else if(parent.getData().toString().equals("Root"))
+		{
+			log.info("root");
+		}else{
+			log.info("Loading Episodes:");
+//			vcp = storageService.getSeasonEpisodes(
+//					storageService.getSerieSeasonByName(
+//							storageService.getSerieByName(parent.getData().toString()),treeNode.getData().toString()));
+
+			selectedSerie = storageService.getSerieByName(parent.getData().toString());
+			selectedSeason =
+					storageService.getSerieSeasonByName(
+							storageService.getSerieByName(parent.getData().toString()),treeNode.getData().toString());
+			//log.info("vcp size:"+vcp.size());
+		}
+
+
+
 		for (Car c: carPool) {
 			boolean visible = true;
 			if (getFilterBrand() != null) {
@@ -158,8 +210,8 @@ public class CarPool implements Serializable {
 			if (getFilterType() != null) {
 				visible &= getFilterType().equals(c.getType());
 			}
-			c.setVisible(visible);
 		}
+
 	}
 
 	public String getFilterBrand() {
