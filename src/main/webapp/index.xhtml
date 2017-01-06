@@ -17,7 +17,7 @@
 <body>
 			<b:navBar  inverse="true"
 				fixed="true">
-				<prime:button value="Add Serie" pt:onclick="$('.aboutModalPseudoClass').modal('show');return false;" href="#main?reverse=true" />
+				<prime:button value="Add Serie" onclick="PF('dlg2').show();" href="#main?reverse=true"/>
 				<prime:button value="Settings"  href="#main?reverse=true" />
 				<prime:button value="NZB Provider"  href="#main?reverse=true" />
 				<prime:button value="About"  href="#main?reverse=true" />
@@ -25,19 +25,20 @@
 			</b:navBar>
 
 	<b:container>
-		<h:form id="formID">
-			<prime:dialog header="Modal Dialog" widgetVar="dlg2" showEffect="clip" hideEffect="clip" minWidth="450" modal="true">
-				<h:form id="formAdd" prependId="false"  >
-					<h:outputLabel value="Add new Serie:" for="acSimple" />
-					<prime:autoComplete id="acSimple" value="#{seriesBean.txt1}" completeMethod="#{seriesBean.completeText}" />
+		<prime:dialog header="Modal Dialog" widgetVar="dlg2" showEffect="clip" hideEffect="clip" minWidth="450" modal="true">
+			<h:form id="formAdd" prependId="false"  >
+				<h:outputLabel value="Add new Serie:" for="acSimple" />
+				<prime:autoComplete id="acSimple" value="#{seriesBean.txt1}" completeMethod="#{seriesBean.completeText}" />
 
-					<prime:commandButton value="Submit" icon="ui-icon-disk" action="#{seriesBean.save}" onclick="PF('dlg2').hide();" look="primary"/>
-				</h:form>
-			</prime:dialog>
+				<prime:commandButton value="Submit" icon="ui-icon-disk" action="#{seriesBean.save}"  onclick="PF('dlg2').hide();setTimeout(function () {location.reload();}, 2000);" look="primary"/>
+			</h:form>
+		</prime:dialog>
+
+		<h:form id="formID">
 
 			<b:row>
 				<b:column span="3">
-			<prime:tree value="#{treeBasicView.root}" var="node" dynamic="true" style="border:0px"
+			<prime:tree id="seriesTree" value="#{treeBasicView.root}" var="node" dynamic="true" style="border:0px"
 						selectionMode="single"
 		                selection="#{carPool.selectedNode}">
 		                <prime:ajax event="select" update="@form" listener="#{carPool.onNodeSelect}" />
@@ -45,6 +46,12 @@
 		            <h:outputText value="#{node}" />
 		        </prime:treeNode>
 		    </prime:tree>
+
+					<prime:commandButton value="Reset"
+					update="seriesTree"
+					icon="ui-icon-newwin"
+					process="@this"
+					actionListener="#{treeBasicView.resetSelectedNode}" />
 		    </b:column>
 		    <b:column span="9">
 				<b:row>

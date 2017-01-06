@@ -7,12 +7,14 @@ import ch.ffhs.easyleecher.storage.model.Serie;
 import ch.ffhs.easyleecher.tvdb.TheTVDBApi;
 import ch.ffhs.easyleecher.tvdb.model.TvDbEpisode;
 import ch.ffhs.easyleecher.tvdb.model.TvDbSeries;
+import org.primefaces.context.RequestContext;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import java.util.Map;
@@ -84,8 +86,6 @@ public class SeriesBean implements Serializable {
 
             }
         }
-
-
     }
 
     public List<String> completeText(String query) {
