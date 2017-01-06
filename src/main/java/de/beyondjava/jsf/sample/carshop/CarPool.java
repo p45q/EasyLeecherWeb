@@ -17,9 +17,7 @@
 package de.beyondjava.jsf.sample.carshop;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -35,7 +33,7 @@ import ch.ffhs.easyleecher.storage.model.Season;
 import ch.ffhs.easyleecher.storage.model.Serie;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.TreeNode;
-
+import static java.util.Comparator.comparing;
 @ManagedBean
 @SessionScoped
 public class CarPool implements Serializable {
@@ -48,7 +46,7 @@ public class CarPool implements Serializable {
 	private String filterType = null;
 	private Season selectedSeason;;
 	private Serie selectedSerie;
-	private List<Episode> vcp;
+	private ArrayList<Episode> vcp;
 	@ManagedProperty("#{staticOptionBean}")
 	private StaticOptionBean staticOptions;
 
@@ -83,14 +81,14 @@ public class CarPool implements Serializable {
 	public String getSerieImage(){
 		if(selectedSerie==null)
 		{
-			return "lala";
+			return "resources/notfound.jpg";
 		}
 		return selectedSerie.getBanner();
 	}
 	public String getSerieDescription(){
 		if(selectedSerie==null)
 		{
-			return "lala";
+			return "Welcome to EasyLeecher";
 		}
 		Logger log =
 				Logger.getLogger(this.getClass().getName());
@@ -105,9 +103,15 @@ public class CarPool implements Serializable {
 
 		if(selectedSeason!=null) {
 			vcp = storageService.getSeasonEpisodes(selectedSeason);
+
+			Collections.sort(vcp, comparing(Episode::getEpisodeEpisode));
+
 			log.warning("loading..." + selectedSeason.getSeasonName() + "with" + vcp.size());
+			log.warning(("First episode is:"+vcp.get(0).getEpisodeEpisode()));
+
 		}
 		return vcp;
+
 	}
 
 	private List<Car> selectedCars;
