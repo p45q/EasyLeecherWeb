@@ -2,6 +2,7 @@ package de.beyondjava.jsf.sample.carshop;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,9 @@ import ch.ffhs.easyleecher.storage.model.Serie;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
 import java.util.logging.Logger;
+
+import static java.util.Comparator.comparing;
+
 @ManagedBean(name = "treeBasicView")
 @ViewScoped
 public class BasicView implements Serializable {
@@ -58,6 +62,7 @@ public class BasicView implements Serializable {
 			TreeNode b = new DefaultTreeNode(serie.getSerieName(), treeSeries);
 
 			ArrayList<Season> seasons = storageService.getSerieSeasons(serie);
+			Collections.sort(seasons, comparing(Season::getSeasonName));
 
 			for(Season season : seasons)
 			{

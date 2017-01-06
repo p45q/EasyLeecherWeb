@@ -15,24 +15,43 @@
 </style>
 </h:head>
 <body>
+
 			<b:navBar  inverse="true"
 				fixed="true">
-				<prime:button value="Add Serie"  href="#main?reverse=true" />
-				<prime:button value="Settings"  href="#main?reverse=true" />
-				<prime:button value="NZB Provider"  href="#main?reverse=true" />
-				<prime:button value="About"  href="#main?reverse=true" />
-				<prime:menuitem value="Shop" url="./shop.xhtml"/>
+				<prime:commandButton value="Add Serie"  href="#main?reverse=true" />
+				<prime:commandButton value="Settings"   onclick="PF('dlg3').show();"/>
+				<prime:commandButton value="NZB Provider"   onclick="PF('dlg2').show();"/>
+				<prime:commandButton value="About"  onclick="PF('dlg1').show();" />
 			</b:navBar>
 
 	<b:container>
+		<prime:dialog header="Settings" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" height="500">
+
+			<h:outputLabel for="TEST 1: " value="TEST 1: " />
+			<prime:inputText id="projectname" value="" label="ProjectName">
+				<f:validateLength minimum="2" />
+			</prime:inputText>
+			<prime:message for="projectname" />
+			<h:outputText value="" />
+
+			<h:outputLabel for="TEST 1: " value="TEST 1: " />
+			<prime:inputText id="sector" value=""  label="Sector"/>
+			<prime:message for="sector" />
+			<h:outputText value="" />
+
+		</prime:dialog>
+
+		<prime:dialog header="NZB Provider" widgetVar="dlg2" showEffect="explode" hideEffect="bounce" height="100">
+
+
+		</prime:dialog>
+		<prime:dialog header="About" widgetVar="dlg1" showEffect="explode" hideEffect="bounce" height="100">
+
+
+		</prime:dialog>
 		<h:form id="formID">
 
-			<b:modal id="aboutModal" title="About"
-				styleClass="aboutModalPseudoClass">
-				<b:panel>
-       			     Test text
-   			     </b:panel>
-			</b:modal>
+
 
 			<b:row>
 				<b:column span="3">
@@ -54,12 +73,7 @@
 				<h:outputText value="#{carPool.serieDescription}"/>
 				</b:row>
 
-			<prime:contextMenu for="carsId">
-				<prime:menuitem value="View" update="@form" icon="ui-icon-search"
-					oncomplete="PF('carDialog').show()" />
-				<prime:menuitem value="Delete" icon="ui-icon-close" update="@form"
-					actionListener="#{dtContextMenuView.deleteCar}" />
-			</prime:contextMenu>
+
 
 			<prime:dataTable value="#{carPool.visibleCarPool}" sortBy="#{car.episodeEpisode}" var="car" id="carsId"
 				paginator="true" rows="10" >
