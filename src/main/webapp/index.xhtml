@@ -15,11 +15,15 @@
 </style>
 </h:head>
 <body>
-			<b:navBar brand="Test" brandHref="index.jsf" inverse="true"
+			<b:navBar  inverse="true"
 				fixed="true">
-				<b:navLink value="WOOHOO"
-					pt:onclick="$('.aboutModalPseudoClass').modal('show');return false;"></b:navLink>
+				<prime:button value="Add Serie"  href="#main?reverse=true" />
+				<prime:button value="Settings"  href="#main?reverse=true" />
+				<prime:button value="NZB Provider"  href="#main?reverse=true" />
+				<prime:button value="About"  href="#main?reverse=true" />
+				<prime:menuitem value="Shop" url="./shop.xhtml"/>
 			</b:navBar>
+
 	<b:container>
 		<h:form id="formID">
 
@@ -42,10 +46,13 @@
 		    </prime:tree>
 		    </b:column>
 		    <b:column span="9">
-				<b:panel>
-				<b:image value="#{carPool.serieImage}" tooltip="Ain't he a beauty?" />
-					<h:outputText value="#{carPool.serieDescription}"/>
-				</b:panel>
+				<b:row>
+				<b:image value="#{carPool.serieImage}" width="877px" />
+				</b:row>
+				<b:row>
+
+				<h:outputText value="#{carPool.serieDescription}"/>
+				</b:row>
 
 			<prime:contextMenu for="carsId">
 				<prime:menuitem value="View" update="@form" icon="ui-icon-search"
@@ -54,8 +61,8 @@
 					actionListener="#{dtContextMenuView.deleteCar}" />
 			</prime:contextMenu>
 
-			<prime:dataTable value="#{carPool.visibleCarPool}" var="car" id="carsId"
-				paginator="true" rows="4">
+			<prime:dataTable value="#{carPool.visibleCarPool}" sortBy="#{car.episodeEpisode}" var="car" id="carsId"
+				paginator="true" rows="10" >
 				<prime:column id="episodeEpisode" headerText="#" style="width:30px;">#{car.episodeEpisode}</prime:column>
 				<prime:column id="episodeName" headerText="Name" style="width:30%;">#{car.episodeName}</prime:column>
 				<prime:column id="episodeDescription" headerText="episodeDescription" style="width:70%;">#{car.episodeDescription}</prime:column>
