@@ -15,11 +15,15 @@
 </style>
 </h:head>
 <body>
-			<b:navBar brand="Test" brandHref="index.jsf" inverse="true"
+			<b:navBar  inverse="true"
 				fixed="true">
-				<b:navLink value="WOOHOO"
-					pt:onclick="PF('dlg2').show();"></b:navLink>
+				<prime:button value="Add Serie" pt:onclick="$('.aboutModalPseudoClass').modal('show');return false;" href="#main?reverse=true" />
+				<prime:button value="Settings"  href="#main?reverse=true" />
+				<prime:button value="NZB Provider"  href="#main?reverse=true" />
+				<prime:button value="About"  href="#main?reverse=true" />
+				<prime:menuitem value="Shop" url="./shop.xhtml"/>
 			</b:navBar>
+
 	<b:container>
 		<h:form id="formID">
 			<prime:dialog header="Modal Dialog" widgetVar="dlg2" showEffect="clip" hideEffect="clip" minWidth="450" modal="true">
@@ -43,6 +47,13 @@
 		    </prime:tree>
 		    </b:column>
 		    <b:column span="9">
+				<b:row>
+				<b:image value="#{carPool.serieImage}" width="877px" />
+				</b:row>
+				<b:row>
+
+				<h:outputText value="#{carPool.serieDescription}"/>
+				</b:row>
 
 			<prime:contextMenu for="carsId">
 				<prime:menuitem value="View" update="@form" icon="ui-icon-search"
@@ -51,12 +62,23 @@
 					actionListener="#{dtContextMenuView.deleteCar}" />
 			</prime:contextMenu>
 
-			<prime:dataTable value="#{carPool.visibleCarPool}" var="car" id="carsId"
-				rowKey="#{car.price}" paginator="true" rows="10">
-				<prime:column id="brandID" headerText="Brand" rendered="#{carPool.filterBrand==null}">#{car.brand}</prime:column>
-				<prime:column id="typeID" headerText="Type" rendered="#{carPool.filterType==null}">#{car.type}</prime:column>
-				<prime:column id="priceID" headerText="Price">#{car.price}</prime:column>
-				<prime:column id="colorID" headerText="Mileage">#{car.mileage}</prime:column>
+			<prime:dataTable value="#{carPool.visibleCarPool}" sortBy="#{car.episodeEpisode}" var="car" id="carsId"
+				paginator="true" rows="10" >
+				<prime:column id="episodeEpisode" headerText="#" style="width:30px;">#{car.episodeEpisode}</prime:column>
+				<prime:column id="episodeName" headerText="Name" style="width:30%;">#{car.episodeName}</prime:column>
+				<prime:column id="episodeDescription" headerText="episodeDescription" style="width:70%;">#{car.episodeDescription}</prime:column>
+				<prime:column id="episodeStatus" headerText="" style="width:30px;"><b:image value="resources/#{car.episodeStatus}.png" tooltip="Ain't he a beauty?" /></prime:column>
+
+				<!--<prime:column id="episodeStatus" headerText="Status" >-->
+					<!--<prime:graphicImage value="resources/#{carPool.episodeStatus}.png">-->
+						<!--<prime:param name="x" value="resources/#{carPool.episodeStatus}.png" />-->
+					<!--</prime:graphicImage>-->
+				<!--</prime:column>-->
+					<!--<h:graphicImage value="resources/#{carPool.episodeStatus}.png"/></prime:column>-->
+
+				<!--<prime:column id="typeID" headerText="Type" rendered="#{carPool.filterType==null}">#{car.type}</prime:column>-->
+				<!--<prime:column id="priceID" headerText="Price">#{car.price}</prime:column>-->
+				<!--<prime:column id="colorID" headerText="Mileage">#{car.mileage}</prime:column>-->
 			</prime:dataTable>
 			<prime:commandButton value="Update Column" actionListener="#{carPool.initRandomCarPool}" update="carsId"></prime:commandButton>
 			</b:column>
