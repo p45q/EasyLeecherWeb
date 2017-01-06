@@ -1,4 +1,4 @@
-package de.beyondjava.jsf.sample.carshop;
+package ch.ffhs.easyleecher.web;
 
 import ch.ffhs.easyleecher.download.SeriesManager;
 import ch.ffhs.easyleecher.storage.StorageService;
@@ -32,14 +32,7 @@ public class SeriesBean implements Serializable {
     private SeriesManager seriesManager;
 
     private String txt1;
-    private String acSimple;
 
-    private static String[] bands = {"Arch Enemy","Blind Guardian","Children of Bodom","Dimmu Borgir","Edge of Sanity",
-            "Fields of the Nephilim", "Gates of Ishtar", "Holy Moses", "Iced Earth", "Jethro Tull",
-            "Kreator", "Lamb of God", "Mekong Delta", "Night in Gales", "Old Dead Tree", "Persefone",
-            "Running Wild", "Skyclad", "The Dillinger Escape Plan", "Theater of Tragedy", "Unleashed", "Vanden Plas", "Within Temptation", "Xystus", "Yes",
-            "Zenobia",
-    };
 
     public SeriesBean() {
         tvDbApi = new TheTVDBApi(StorageService.getInstance()
@@ -51,9 +44,6 @@ public class SeriesBean implements Serializable {
     }
 
     public void save() {
-        Logger log = Logger.getLogger(this.getClass().getName());
-        log.warning("actionEvent: txt1: " +  txt1 + "acSimple: " + acSimple);
-
         List<TvDbSeries> list = tvDbApi.searchSeries(txt1, "en");
 
         TvDbSeries serieSelected = list.get(0);
@@ -91,9 +81,6 @@ public class SeriesBean implements Serializable {
     public List<String> completeText(String query) {
         List<String> series = new ArrayList<String>();
 
-        Logger log = Logger.getLogger(this.getClass().getName());
-log.warning("QUERY" + query);
-
         List<TvDbSeries> list = tvDbApi.searchSeries(query, "en");
 
         for (TvDbSeries serie : list) {
@@ -111,27 +98,6 @@ log.warning("QUERY" + query);
         this.txt1 = txt1;
     }
 
-
-    public String getAcSimple() {
-        return acSimple;
-    }
-
-    public void setAcSimple(String acSimple) {
-        this.acSimple = acSimple;
-    }
-
-
-    public List<String> getSeriesList(Object key ) {
-        List<String> series = new ArrayList<String>();
-        String currentValue = key.toString();
-
-        List<TvDbSeries> list = tvDbApi.searchSeries(currentValue, "en");
-
-        for (TvDbSeries serie : list) {
-            series.add(serie.getSeriesName());
-        }
-        return series;
-    }
 
 
 }
