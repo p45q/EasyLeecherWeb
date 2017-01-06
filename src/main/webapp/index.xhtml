@@ -18,17 +18,18 @@
 			<b:navBar brand="Test" brandHref="index.jsf" inverse="true"
 				fixed="true">
 				<b:navLink value="WOOHOO"
-					pt:onclick="$('.aboutModalPseudoClass').modal('show');return false;"></b:navLink>
+					pt:onclick="PF('dlg2').show();"></b:navLink>
 			</b:navBar>
 	<b:container>
 		<h:form id="formID">
+			<prime:dialog header="Modal Dialog" widgetVar="dlg2" showEffect="clip" hideEffect="clip" minWidth="450" modal="true">
+				<h:form id="formAdd" prependId="false"  >
+					<h:outputLabel value="Add new Serie:" for="acSimple" />
+					<prime:autoComplete id="acSimple" value="#{seriesBean.txt1}" completeMethod="#{seriesBean.completeText}" />
 
-			<b:modal id="aboutModal" title="About"
-				styleClass="aboutModalPseudoClass">
-				<b:panel>
-       			     Test text
-   			     </b:panel>
-			</b:modal>
+					<prime:commandButton value="Submit" icon="ui-icon-disk" action="#{seriesBean.save}" onclick="PF('dlg2').hide();" look="primary"/>
+				</h:form>
+			</prime:dialog>
 
 			<b:row>
 				<b:column span="3">
