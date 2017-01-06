@@ -18,14 +18,14 @@
 
 			<b:navBar  inverse="true"
 				fixed="true">
-                <prime:button value="Add Serie" onclick="PF('dlg2').show();" href="#main?reverse=true"/>
+                <prime:button value="Add Serie" onclick="PF('dlgAdd').show();" href="#main?reverse=true"/>
 				<prime:commandButton value="Settings"   onclick="PF('dlg3').show();"/>
 				<prime:commandButton value="NZB Provider"   onclick="PF('dlg2').show();"/>
 				<prime:commandButton value="About"  onclick="PF('dlg1').show();" />
 			</b:navBar>
 
 	<b:container>
-		<prime:dialog header="Modal Dialog" widgetVar="dlg2" showEffect="clip" hideEffect="clip" minWidth="450" modal="true">
+		<prime:dialog header="Modal Dialog" widgetVar="dlgAdd	" showEffect="clip" hideEffect="clip" minWidth="450" modal="true">
 			<h:form id="formAdd" prependId="false"  >
 				<h:outputLabel value="Add new Serie:" for="acSimple" />
 				<prime:autoComplete id="acSimple" value="#{seriesBean.txt1}" completeMethod="#{seriesBean.completeText}" />
