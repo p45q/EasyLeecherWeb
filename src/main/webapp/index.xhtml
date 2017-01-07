@@ -18,19 +18,19 @@
 
 			<b:navBar  inverse="true"
 				fixed="true">
-                <prime:button value="Add Serie" onclick="PF('dlgAdd').show();" href="#main?reverse=true"/>
-				<prime:commandButton value="Settings"   onclick="PF('dlg3').show();"/>
-				<prime:commandButton value="NZB Provider"   onclick="PF('dlg2').show();"/>
-				<prime:commandButton value="About"  onclick="PF('dlg1').show();" />
+                <prime:button style="margin: 10px 20px 0 0" value="Add Serie" onclick="PF('dlgAdd').show();" href="#main?reverse=true"/>
+				<prime:commandButton style="margin: 10px 20px 0 0" value="Settings"   onclick="PF('dlg3').show();"/>
+				<prime:commandButton style="margin: 10px 20px 0 0" value="NZB Provider"   onclick="PF('dlg2').show();"/>
+				<prime:commandButton style="margin: 10px 20px 0 0" value="About"  onclick="PF('dlg1').show();" />
 			</b:navBar>
 
 	<b:container>
-		<prime:dialog header="Modal Dialog" widgetVar="dlgAdd" showEffect="clip" hideEffect="clip" minWidth="450" modal="true">
+		<prime:dialog header="Add Serie" widgetVar="dlgAdd" showEffect="clip" hideEffect="clip" minWidth="450" modal="true">
 			<h:form id="formAdd" prependId="false"  >
-				<h:outputLabel value="Add new Serie:" for="acSimple" />
+				<h:outputLabel value="Search Serie" for="acSimple" />
 				<prime:autoComplete id="acSimple" value="#{seriesBean.txt1}" completeMethod="#{seriesBean.completeText}" />
 
-				<prime:commandButton value="Submit" icon="ui-icon-disk" action="#{seriesBean.save}"  onclick="PF('dlg2').hide();setTimeout(function () {location.reload();}, 2000);" look="primary"/>
+				<prime:commandButton value="Add Serie" icon="ui-icon-disk" action="#{seriesBean.save}"  onclick="PF('dlg2').hide();setTimeout(function () {location.reload();}, 2000);" look="primary"/>
 			</h:form>
 		</prime:dialog>
 
